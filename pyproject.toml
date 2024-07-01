@@ -1,0 +1,7 @@
+[project]
+name = "mumemap"
+version = "0.1"
+description = "A mini mapper for mume"
+dependencies = ['pyglet']
+
+

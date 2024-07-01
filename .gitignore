@@ -1,0 +1,4 @@
+build
+mumemap.egg-info
+venv
+__pycache__
