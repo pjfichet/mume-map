@@ -8,7 +8,7 @@ It is simple and hackable fork of [mapperproxy-mume](https://github.com/nstockto
 
 ---
 
-![screenshot](https://github.com/pjfichet/mume-minimap/raw/master/tiles/tiles/screenshot-multi.png?raw=true "screenshot")
+![screenshot](https://github.com/pjfichet/mume-minimap/raw/master/tileset/screenshot-multi.png?raw=true "screenshot")
 
 ---
 
