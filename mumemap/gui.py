@@ -116,6 +116,8 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		self.cx = 0
 		self.cy = 0
 		self.cz = 0
+		# room selected by right click
+		self.selectedRoom = None
 		# Pyglet window
 		super().__init__(self.col * self.square, self.row * self.square, caption="MPM", resizable=True)
 		logger.info(f"Creating window {self}")
@@ -264,7 +266,7 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		self.sprites.append(sprite)
 
 	def on_mouse_press(self, wx: int, wy: int, buttons: int, modifiers: int) -> None:
-		logger.debug(f"Mouse click on {wx} {wy}.")
+		logger.debug(f"Mouse press on {wx} {wy}.")
 		x: int = int(wx / self.square)
 		y: int = int(wy / self.square)
 		cx, cy = self.getWorldCoordinates(x, y)
@@ -282,8 +284,44 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 				logger.warning("Unable to center the map on the player. The player room is not defined.")
 		elif buttons == pyglet.window.mouse.RIGHT:
 			logger.debug(f"Right click on {wx} {wy}.")
-			# print the vnum
-			self.world.echo(f"Click on room {room.vnum}.")
+			# check if the player clicked on a room
+			if (x, y) in self.visibleRooms:
+				self.selectedRoom = self.visibleRooms[x, y]
+				self.world.echo(f"Click on room {self.selectedRoom.vnum} ({self.selectedRoom.x}, {self.selectedRoom.y}, {self.selectedRoom.z}).")
+			else:
+				self.world.echo(f"Click on coordinates (cx, cy, self.cz).")
+
+	def on_mouse_release(self, wx, wy, buttons, modifiers):
+		if buttons != pyglet.window.mouse.RIGHT:
+			return
+		logger.debug(f"Mouse release on {wx} {wy}.")
+		x: int = int(wx / self.square)
+		y: int = int(wy / self.square)
+		cx, cy = self.getWorldCoordinates(x, y)
+		if self.selectedRoom.x != cx or self.selectedRoom.y != cy:
+			print(f"moving {self.selectedRoom.vnum} ({self.selectedRoom.x}, {self.selectedRoom.y}, {self.selectedRoom.z}) to ({cx}, {cy}, {self.selectedRoom.z}).")
+
+	def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+		if buttons != pyglet.window.mouse.RIGHT:
+			return
+		for sprite in self.sprites:
+			if sprite.x < x < sprite.x + sprite.width and sprite.y < y < sprite.y + sprite.width:
+				sprite.x += dx
+				sprite.y += dy
+
+	def on_key_press(self, symbol, modifiers):
+		x = self.cx
+		y = self.cy
+		if symbol == pyglet.window.key.H:
+			x -= 1
+		elif symbol == pyglet.window.key.J:
+			y -= 1
+		elif symbol == pyglet.window.key.K:
+			y += 1
+		elif symbol == pyglet.window.key.L:
+			x += 1
+		# center the map on the selected room
+		self.draw_map(x, y, self.cz)
 
 
 Window.register_event_type("on_mapSync")
