@@ -360,9 +360,9 @@ class Map:
 		if vnum in self.rooms:
 			room = self.rooms[vnum]
 			if room.label:
-				self.echo(f"Room {vnum}: {room.name} ({room.x},{room.y},{room.z} - {room.label})
+				self.echo(f"Room {vnum}: {room.name} ({room.x},{room.y},{room.z} - {room.label}")
 			else:
-				self.echo(f"Room {vnum}: {room.name} ({room.x},{room.y},{room.z})
+				self.echo(f"Room {vnum}: {room.name} ({room.x},{room.y},{room.z}")
 			if room.note:
 				self.echo(f"Room {vnum}: {room.note}")
 
