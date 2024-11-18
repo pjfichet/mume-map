@@ -6,6 +6,7 @@ import heapq
 from difflib import SequenceMatcher
 from . import gui
 from . import fmt
+from . import log
 
 logger = logging.getLogger(__name__)
 
@@ -67,16 +68,22 @@ class Room:
 
 
 class Map:
-	def __init__(self, datafile):
+	def __init__(self):
 		self._gui_queue = SimpleQueue()
 		self.window = gui.GuiThread(self)
-		self.datafile = datafile
+		self.datafile = ''
 		self.database = {}
 		self.rooms = {}
 		self.currentRoom = Room()
 		self.currentPath = []
 		self.labels = {}
 		self.synced = False
+
+	def log(self, filename='map.log', verbosity=2, redirectstderr=False):
+		log.log(filename, verbosity, redirectstderr)
+
+	def open(self, datafile):
+		self.datafile = datafile
 		self.load()
 		self.window.start()
 
