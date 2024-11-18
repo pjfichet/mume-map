@@ -82,7 +82,7 @@ TILES = {
 	# player
 	"player": pyglet.image.load(os.path.join(TILESDIR, "player.png")),
 	# other
-	"label": pyglet.image.load(os.path.join(TILESDIR, "attention.png")),
+	"label": pyglet.image.load(os.path.join(TILESDIR, "label.png")),
 	"noid": pyglet.image.load(os.path.join(TILESDIR, "noid.png")),
 	"path": pyglet.image.load(os.path.join(TILESDIR, "path.png")),
 }
