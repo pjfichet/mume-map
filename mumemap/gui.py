@@ -266,18 +266,18 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		cx, cy = self.getWorldCoordinates(x, y)
 		# Action depends on which button the player clicked
 		if buttons == pyglet.window.mouse.LEFT:
-			logger.info(f"Left click on {wx} {wy}.")
+			logger.debug(f"Left click on {wx} {wy}.")
 			# center the map on the selected room
 			self.draw_map(cx, cy, self.cz)
 		elif buttons == pyglet.window.mouse.MIDDLE:
-			logger.info(f"Middle click on {wx} {wy}.")
+			logger.debug(f"Middle click on {wx} {wy}.")
 			# center the map on the player
 			if self.playerRoom is not None:
 				self.draw_map(self.playerRoom)
 			else:
 				logger.warning("Unable to center the map on the player. The player room is not defined.")
 		elif buttons == pyglet.window.mouse.RIGHT:
-			logger.info(f"Right click on {wx} {wy}.")
+			logger.debug(f"Right click on {wx} {wy}.")
 			# print the vnum
 			self.world.echo(f"Click on room {room.vnum}.")
 
