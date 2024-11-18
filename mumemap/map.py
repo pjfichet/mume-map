@@ -355,6 +355,17 @@ class Map:
 		for vnum, room in self.rooms.items():
 			if string in room.note:
 				self.echo(f"Room {room.vnum}: {room.note}")
+
+	def findVnum(self, vnum):
+		if vnum in self.rooms:
+			room = self.rooms[vnum]
+			if room.label:
+				self.echo(f"Room {vnum}: {room.name} ({room.x},{room.y},{room.z} - {room.label})
+			else:
+				self.echo(f"Room {vnum}: {room.name} ({room.x},{room.y},{room.z})
+			if room.note:
+				self.echo(f"Room {vnum}: {room.note}")
+
 		
 	def echo(self, message):
 		print(f"map: {message}")
