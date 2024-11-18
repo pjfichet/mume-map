@@ -349,7 +349,7 @@ class Map:
 	def findLabel(self, string):
 		for label in self.labels:
 			if string in label:
-				self.echo(f"Label: {label}")
+				self.echo(f"Room {self.rooms[self.labels[label]].vnum}: {label} ")
 
 	def findNote(self, string):
 		for vnum, room in self.rooms.items():
