@@ -10,7 +10,7 @@ from queue import Empty as QueueEmpty
 import threading
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.WARNING)
+#logger.setLevel(logging.WARNING)
 
 # Third-party Modules:
 import pyglet
