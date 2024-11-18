@@ -140,7 +140,7 @@ class Map:
 			newroom.terrain = roomdict["terrain"]
 			newroom.cost = terrain_cost[newroom.terrain]
 			if newroom.avoid:
-				newroom.cost + 1000.0
+				newroom.cost += 1000.0
 			newroom.coordinates = roomdict["coordinates"]
 			newroom.x = newroom.coordinates[0]
 			newroom.y = newroom.coordinates[1]
