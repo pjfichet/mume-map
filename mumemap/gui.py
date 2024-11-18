@@ -108,10 +108,12 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		# The list of visible rooms:
 		# A dictionary using a tuple of coordinates (x, y) as keys
 		self.visibleRooms = {}
-		# Player position and central rooms
-		# They are set to None at startup.
+		# Player position, set to None at startup.
 		self.playerRoom = None
-		self.centerRoom = None
+		# center coordinates
+		self.cx = 0
+		self.cy = 0
+		self.cz = 0
 		# Pyglet window
 		super().__init__(self.col * self.square, self.row * self.square, caption="MPM", resizable=True)
 		logger.info(f"Creating window {self}")
@@ -158,33 +160,30 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		self.row = int(height / self.square)
 		self.mrow = int(self.row / 2)
 		self.radius = (self.mcol, self.mrow, 1)
-		if self.centerRoom is not None:
-			self.draw_map(self.centerRoom)
+		self.draw_map(self.cx, self.cy, self.cz)
 
 	def on_mapSync(self, currentRoom):
 		logger.info(f"Map synced to room {currentRoom.vnum}")
 		# reset player position, center the map around
 		self.playerRoom = currentRoom
-		self.draw_map(currentRoom)
+		self.draw_map(currentRoom.x, currentRoom.y, currentRoom.z)
 
 	def on_guiRefresh(self) -> None:
 		"""This event is fired when the mapper needs to signal the GUI to clear
 		the visible rooms cache and redraw the map view."""
-		if self.centerRoom is not None:
-			self.draw_map(self.centerRoom)
-			logger.debug("GUI refreshed.")
-		else:
-			logger.warning("Unable to refresh the GUI. The center room is not defined.")
+		self.draw_map(self.cx, self.cy, self.cz)
+		logger.debug("GUI refreshed.")
 
-	def draw_map(self, centerRoom) -> None:
-		logger.debug(f"Drawing rooms around {centerRoom.vnum}")
+	def draw_map(self, cx, cy, cz) -> None:
+		logger.debug(f"Drawing rooms around ({cx}, {cy}, {cz}).")
 		# reset the recorded state of the window
 		self.sprites.clear()
 		self.visibleRooms.clear()
-		self.centerRoom = centerRoom
+		self.cx = cx
+		self.cy = cy
+		self.cz = cz
 		# draw the rooms, beginning by the central one
-		self.draw_room(self.mcol, self.mrow, centerRoom)
-		for vnum, room, x, y, z in self.world.getNeighborsFromRoom(start=centerRoom, radius=self.radius):
+		for vnum, room, x, y, z in self.world.getNeighbors(cx, cy, cz, radius=self.radius):
 			if z == 0:
 				self.draw_room(self.mcol + x, self.mrow + y, room)
 		self.draw_player()
@@ -232,13 +231,13 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 			self.draw_tile(x, y, 2, "noid")
 
 	def draw_player(self) -> None:
-		if self.playerRoom is None or self.centerRoom is None:
+		if self.playerRoom is None:
 			return None
 		logger.debug(f"Drawing player on room vnum {self.playerRoom.vnum}")
 		# transform map coordinates to window ones
-		x: int = self.playerRoom.x - self.centerRoom.x + self.mcol
-		y: int = self.playerRoom.y - self.centerRoom.y + self.mrow
-		z: int = self.playerRoom.z - self.centerRoom.z
+		x: int = self.playerRoom.x - self.cx + self.mcol
+		y: int = self.playerRoom.y - self.cy + self.mrow
+		z: int = self.playerRoom.z - self.cz
 		# Be sure the player coordinates are part of the window
 		if z == 0 and x >= 0 and x < self.col and y >= 0 and y < self.row:
 			# draw the player on layer 3

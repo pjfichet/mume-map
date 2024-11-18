@@ -165,10 +165,9 @@ class Map:
 			# roomdict.clear()
 		logger.info(f"Loaded {len(self.rooms)} rooms containing {serverids} server_id.")
 
-	def getNeighborsFromRoom(self, start, radius):
+	def getNeighbors(self, x, y, z, radius):
 		"""A generator which yields all rooms in the vicinity of a room object.
 		Each yielded result contains the vnum, room object reference, and difference in X-Y-Z coordinates."""
-		x, y, z = start.x, start.y, start.z
 		radiusX, radiusY, radiusZ = radius
 		for vnum, obj in self.rooms.items():
 			differenceX, differenceY, differenceZ = obj.x - x, obj.y - y, obj.z - z
@@ -176,7 +175,6 @@ class Map:
 				abs(differenceX) <= radiusX
 				and abs(differenceY) <= radiusY
 				and abs(differenceZ) <= radiusZ
-				and obj is not start
 			):
 				yield (vnum, obj, differenceX, differenceY, differenceZ)
 				
