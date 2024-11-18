@@ -66,7 +66,6 @@ TILES = {
 	"exitup": pyglet.image.load(os.path.join(TILESDIR, "exitup.png")),
 	"exitdown": pyglet.image.load(os.path.join(TILESDIR, "exitdown.png")),
 	# load flags
-	"attention": pyglet.image.load(os.path.join(TILESDIR, "attention.png")),
 	"armour": pyglet.image.load(os.path.join(TILESDIR, "armour.png")),
 	"herb": pyglet.image.load(os.path.join(TILESDIR, "herb.png")),
 	"key": pyglet.image.load(os.path.join(TILESDIR, "key.png")),
@@ -77,10 +76,13 @@ TILES = {
 	"quest_mob": pyglet.image.load(os.path.join(TILESDIR, "quest.png")),
 	"rent": pyglet.image.load(os.path.join(TILESDIR, "rent.png")),
 	"shop": pyglet.image.load(os.path.join(TILESDIR, "shop.png")),
-	"aggressive_mob": pyglet.image.load(os.path.join(TILESDIR, "smob.png")),
+	"aggressive_mob": pyglet.image.load(os.path.join(TILESDIR, "aggressive-mob.png")),
+	# actually, attention flag is used for plant traps and insta hit mobs
+	"attention": pyglet.image.load(os.path.join(TILESDIR, "elite-mob.png")),
 	# player
 	"player": pyglet.image.load(os.path.join(TILESDIR, "player.png")),
 	# other
+	"label": pyglet.image.load(os.path.join(TILESDIR, "attention.png")),
 	"noid": pyglet.image.load(os.path.join(TILESDIR, "noid.png")),
 	"path": pyglet.image.load(os.path.join(TILESDIR, "path.png")),
 }
@@ -227,6 +229,8 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 			elif re.search("guild", flag) is not None:
 				self.draw_tile(x, y, 2, "guild")
 				break
+		if room.label:
+			self.draw_tile(x, y, 2, "label")
 		# show path
 		if room in self.world.currentPath:
 			logger.info("Drawing path for {room.vnum}.")
