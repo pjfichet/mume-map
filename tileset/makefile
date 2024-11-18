@@ -13,7 +13,7 @@ hill hill-dark mountain mountain-dark swamp swamp-dark \
 water water-dark rapid rapid-dark underwater underwater-dark \
 cavern cavern-dark tunnel tunnel-dark road road-dark city city-dark \
 indoor indoor-dark random random-dark undefined \
-armour attention exitdown exitup guild \
+armour label exitdown exitup guild \
 herb key quest rent shop aggressive-mob super-mob elite-mob treasure \
 walleast wallnorth wallsouth wallwest weapon elf elf-dark \
 elf-grey cleric warrior orc troll helf-light helf-dark \
@@ -29,7 +29,7 @@ $(TILESDIR)/%.png: %-multi.png
 	mv $< $@
 
 $(TILESDIR)/player.png: $(TILESDIR)/$(PLAYER).png
-	ln -s $< $@
+	cd $(TILESDIR) && ln -s $(PLAYER).png player.png
 
 %-multi.png: %
 	xcf2png tiles-multi.xcf $< > $@
