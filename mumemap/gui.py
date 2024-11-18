@@ -129,6 +129,11 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		# Define FPS
 		pyglet.clock.schedule_interval_soft(self.queue_observer, 1.0 / FPS)
 
+	def getWorldCoordinates(self, x, y):
+		x = self.cx - self.mcol + x
+		y = self.cy - self.mrow + y
+		return(x, y)
+
 	def queue_observer(self, dt: float) -> None:
 		while not self._gui_queue.empty():
 			#with suppress(QueueEmpty):
@@ -258,17 +263,12 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		logger.debug(f"Mouse click on {wx} {wy}.")
 		x: int = int(wx / self.square)
 		y: int = int(wy / self.square)
-		# check if the player clicked on a room
-		# searching for the tuple of coordinates (x, y)
-		try:
-			room = self.visibleRooms[x, y]
-		except KeyError:
-			return None
+		cx, cy = self.getWorldCoordinates(x, y)
 		# Action depends on which button the player clicked
 		if buttons == pyglet.window.mouse.LEFT:
 			logger.info(f"Left click on {wx} {wy}.")
 			# center the map on the selected room
-			self.draw_map(room)
+			self.draw_map(cx, cy, self.cz)
 		elif buttons == pyglet.window.mouse.MIDDLE:
 			logger.info(f"Middle click on {wx} {wy}.")
 			# center the map on the player
