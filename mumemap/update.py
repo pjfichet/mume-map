@@ -51,8 +51,7 @@ class Update:
 		elif newroom['server_id'] != newroom['server_id']:
 			print(f"{vnum}: server_id differ.")
 		# label
-		if oldroom['label']:
-			newroom['label'] = oldroom['label']
+		newroom['label'] = oldroom['label']
 		# check room identity
 		if oldroom['coordinates'] != newroom['coordinates']:
 			print(f"{vnum}: coordinates differ ({oldroom['coordinates']} -> {newroom['coordinates']}).")
