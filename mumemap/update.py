@@ -20,7 +20,7 @@ class Update:
 		for vnum, room in self.oldjson.items():
 			if vnum not in self.newjson:
 				self.newjson[vnum] = room
-		data = json.dumps(self.oldjson, sort_keys=True, indent=2)
+		data = json.dumps(self.newjson, sort_keys=True, indent=2)
 		with open(outfile, "w") as f:
 			f.write(data)
 		print(f"Added {self.newrooms} rooms and {self.newserverids} server_ids.")
