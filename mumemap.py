@@ -28,12 +28,12 @@ elif len(sys.argv) == 3 and sys.argv[1] == "-e":
 	e.run(sys.argv[2])
 elif len(sys.argv) == 5 and sys.argv[1] == "-u":
 	# update
-	filexists(sys.argv[2])
-	filexists(sys.argv[3])
+	fileexists(sys.argv[2])
+	fileexists(sys.argv[3])
 	if os.path.exists(sys.argv[4]):
 		print(f"Error: {sys.argv[4]} exists.")
 		exit()
-	from .update import Update
+	from mumemap.update import Update
 	u = Update()
 	u.update(sys.argv[2], sys.argv[3], sys.argv[4])
 else:

@@ -1,7 +1,7 @@
 import os
 import json
 from difflib import SequenceMatcher
-from fmt import *
+from . import fmt
 
 class Update:
 	def __init__(self):
@@ -54,10 +54,10 @@ class Update:
 		if oldroom['label']:
 			newroom['label'] = oldroom['label']
 		if oldroom['name'] != newroom['name'] or oldroom['description'] != newroom['description']:
-			oldname = stringAscii(oldroom['name']).lower()
-			newname = stringAscii(newroom['name']).lower()
-			olddesc = stringAscii(oldroom['description']).lower()
-			newdesc = stringAscii(newroom['description']).lower()
+			oldname = fmt.stringAscii(oldroom['name']).lower()
+			newname = fmt.stringAscii(newroom['name']).lower()
+			olddesc = fmt.stringAscii(oldroom['description']).lower()
+			newdesc = fmt.stringAscii(newroom['description']).lower()
 			if oldname != newname or olddesc != newdesc:
 				nameratio = SequenceMatcher(None, oldname, newname).ratio()
 				descratio = SequenceMatcher(None, olddesc, newdesc).ratio()
