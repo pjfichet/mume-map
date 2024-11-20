@@ -77,8 +77,9 @@ TILES = {
 	"rent": pyglet.image.load(os.path.join(TILESDIR, "rent.png")),
 	"shop": pyglet.image.load(os.path.join(TILESDIR, "shop.png")),
 	"aggressive_mob": pyglet.image.load(os.path.join(TILESDIR, "aggressive-mob.png")),
-	# actually, attention flag is used for plant traps and insta hit mobs
-	"attention": pyglet.image.load(os.path.join(TILESDIR, "elite-mob.png")),
+	"elite_mob": pyglet.image.load(os.path.join(TILESDIR, "elite-mob.png")),
+	# actually, attention flag is used for so many things it becomes meaningless
+	"attention": pyglet.image.load(os.path.join(TILESDIR, "super-mob.png")),
 	# player
 	"player": pyglet.image.load(os.path.join(TILESDIR, "player.png")),
 	# other
@@ -222,6 +223,8 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 				break
 		# draw a single mob flag on layer 2
 		for flag in room.mobFlags:
+			if flag in ("roots", "rattlesnake", "elite_mob"):
+				self.draw_tile(x, y, 2, "elite_mob")
 			if flag in ("aggressive_mob", "rent", "quest_mob"):
 				self.draw_tile(x, y, 2, flag)
 				break
