@@ -100,7 +100,7 @@ class Map:
 		if serverids > 0:
 			logger.info(f"Added {serverids} server_id to map.")
 			self.echo(f"Added {serverids} server_id to map.")
-		data = json.dumps(self.database, sort_keys=True, indent=4)
+		data = json.dumps(self.database, sort_keys=True, indent=2)
 		with open(self.datafile, "w") as f:
 			f.write(data)
 		logger.info(f"Map written on {self.datafile}.")
