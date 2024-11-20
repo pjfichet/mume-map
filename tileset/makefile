@@ -17,7 +17,7 @@ armour label exitdown exitup guild \
 herb key quest rent shop aggressive-mob super-mob elite-mob treasure \
 walleast wallnorth wallsouth wallwest weapon elf elf-dark \
 elf-grey cleric warrior orc troll helf-light helf-dark \
-root noid path
+root noid path attention helmet
 
 
 all: $(TILESDIR) $(TILES:%=$(TILESDIR)/%.png) $(TILESDIR)/player.png

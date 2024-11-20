@@ -79,7 +79,7 @@ TILES = {
 	"aggressive_mob": pyglet.image.load(os.path.join(TILESDIR, "aggressive-mob.png")),
 	"elite_mob": pyglet.image.load(os.path.join(TILESDIR, "elite-mob.png")),
 	# actually, attention flag is used for so many things it becomes meaningless
-	"attention": pyglet.image.load(os.path.join(TILESDIR, "super-mob.png")),
+	"attention": pyglet.image.load(os.path.join(TILESDIR, "helmet.png")),
 	# player
 	"player": pyglet.image.load(os.path.join(TILESDIR, "player.png")),
 	# other
