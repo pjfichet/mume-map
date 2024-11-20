@@ -1,4 +1,5 @@
 build
 mumemap.egg-info
+map.log
 venv
 __pycache__
