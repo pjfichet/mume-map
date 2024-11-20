@@ -53,14 +53,21 @@ class Update:
 		# label
 		if oldroom['label']:
 			newroom['label'] = oldroom['label']
-		if oldroom['name'] != newroom['name'] or oldroom['description'] != newroom['description']:
+		# check room identity
+		if oldroom['coordinates'] != newroom['coordinates']:
+			print(f"{vnum}: coordinates differ ({oldroom['coordinates']} -> {newroom['coordinates']}).")
+		if oldroom['name'] != newroom['name']:
 			oldname = fmt.stringAscii(oldroom['name']).lower()
 			newname = fmt.stringAscii(newroom['name']).lower()
+			if oldname != newname:
+				ratio = SequenceMatcher(None, oldname, newname).ratio()
+				if ratio < 0.8:
+					print(f"{vnum}: name differ with ratio {ratio}.")
+		if oldroom['description'] != newroom['description']:
 			olddesc = fmt.stringAscii(oldroom['description']).lower()
 			newdesc = fmt.stringAscii(newroom['description']).lower()
-			if oldname != newname or olddesc != newdesc:
-				nameratio = SequenceMatcher(None, oldname, newname).ratio()
-				descratio = SequenceMatcher(None, olddesc, newdesc).ratio()
-				if nameratio < 0.9 or descratio < 0.8:
-					print(f"{vnum}: description differ ({nameratio}, {descratio}).")		
+			if olddesc != newdesc:
+				ratio = SequenceMatcher(None, olddesc, newdesc).ratio()
+				if ratio < 0.7:
+					print(f"{vnum}: description differ with ratio {ratio}.")
 
