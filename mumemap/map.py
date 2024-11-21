@@ -57,6 +57,7 @@ class Room:
 		self.avoid = False
 		self.mobFlags = ()
 		self.loadFlags = ()
+		self.ingredients = ()
 		self.x = 0
 		self.y = 0
 		self.z = 0
@@ -65,6 +66,9 @@ class Room:
 	def __lt__(self, room):
 		# heapq.heappush should'nt attempt to sort rooms.
 		return False
+
+	def distance(self, room):
+		return abs(room.x - self.x) + abs(room.y - self.y) + abs(room.z - self.z)
 
 
 class Map:
@@ -130,6 +134,7 @@ class Map:
 			newroom.light = roomdict["light"]
 			newroom.loadFlags = set(roomdict["load_flags"])
 			newroom.mobFlags = set(roomdict["mob_flags"])
+			newroom.ingredients = set(roomdict["ingredients"])
 			newroom.name = roomdict["name"]
 			newroom.note = roomdict["note"]
 			newroom.label = roomdict["label"]
@@ -366,7 +371,19 @@ class Map:
 			if room.note:
 				self.echo(f"Room {vnum}: {room.note}")
 
-		
+	def findIngredient(self, ingredient):
+		self.echo(f"searching for -{ingredient}-")
+		result = []
+		for vnum, room in self.rooms.items():
+			if ingredient in room.ingredients:
+				result.append(room)
+		if not result:
+			self.echo(f"Nothing found.")
+			return
+		result.sort(key=lambda x: x.distance(self.currentRoom))
+		for room in result[:10]:
+			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {", ".join(room.ingredients)}")
+
 	def echo(self, message):
 		print(f"map: {message}")
 

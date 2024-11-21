@@ -43,7 +43,9 @@ class Emulation:
 			elif cmd.isdigit():
 				self.vnum(cmd)
 			elif cmd.split(' ')[0] == 'label':
-				self.map.findLabel(cmd[1])
+				self.map.findLabel(cmd.split(' ')[1])
+			elif cmd.split(' ')[0] == 'ingredient':
+				self.map.findIngredient(cmd.split(' ')[1])
 			elif cmd == 'quit' or cmd == 'q':
 				break
 		# after loop break
