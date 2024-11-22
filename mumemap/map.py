@@ -82,7 +82,7 @@ class Map:
 		self.currentPath = []
 		self.labels = {}
 		self.synced = False
-
+		self.playerTile = 'helf-light'
 
 	def log(self, filename='map.log', verbosity=2, redirectstderr=False):
 		log.log(filename, verbosity, redirectstderr)
