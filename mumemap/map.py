@@ -412,11 +412,11 @@ class Map:
 
 
 	def player(self, tile):
-		if tile in player_tile:
+		if tile in player_tiles:
 			self.playerTile = tile
 			self._gui_queue.put(("on_mapSync", self.currentRoom))
 		else:
-			self.echo(f"Player can be: {', '.join(player_tile)}.")
+			self.echo(f"Player can be: {', '.join(player_tiles)}.")
 
 	def echo(self, message):
 		print(f"map: {message}")
