@@ -78,6 +78,7 @@ TILES = {
 	"shop": pyglet.image.load(os.path.join(TILESDIR, "shop.png")),
 	"aggressive_mob": pyglet.image.load(os.path.join(TILESDIR, "aggressive-mob.png")),
 	"elite_mob": pyglet.image.load(os.path.join(TILESDIR, "elite-mob.png")),
+	"super_mob": pyglet.image.load(os.path.join(TILESDIR, "super-mob.png")),
 	# actually, attention flag is used for so many things it becomes meaningless
 	"attention": pyglet.image.load(os.path.join(TILESDIR, "helmet.png")),
 	# player
@@ -234,7 +235,7 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		for flag in room.mobFlags:
 			if flag in ("roots", "rattlesnake", "elite_mob"):
 				self.draw_tile(x, y, 2, "elite_mob")
-			if flag in ("aggressive_mob", "rent", "quest_mob"):
+			if flag in ("aggressive_mob", "super_mob", "rent", "quest_mob"):
 				self.draw_tile(x, y, 2, flag)
 				break
 			elif re.search("shop", flag) is not None:
