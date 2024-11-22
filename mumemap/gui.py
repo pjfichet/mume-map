@@ -85,6 +85,7 @@ TILES = {
 	"cleric": pyglet.image.load(os.path.join(TILESDIR, "cleric.png")),
 	"elf-dark": pyglet.image.load(os.path.join(TILESDIR, "elf-dark.png")),
 	"elf-grey": pyglet.image.load(os.path.join(TILESDIR, "elf-grey.png")),
+	"elf-light": pyglet.image.load(os.path.join(TILESDIR, "elf-light.png")),
 	"elf": pyglet.image.load(os.path.join(TILESDIR, "elf.png")),
 	"helf-dark": pyglet.image.load(os.path.join(TILESDIR, "helf-dark.png")),
 	"helf-light": pyglet.image.load(os.path.join(TILESDIR, "helf-light.png")),
