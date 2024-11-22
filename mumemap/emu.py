@@ -47,6 +47,8 @@ class Emulation:
 				self.map.findLabel(cmd[1])
 			elif cmd[0] == 'ingredient' and len(cmd) > 1:
 				self.map.findIngredient(cmd[1])
+			elif cmd[0] == 'player' and len(cmd) > 1:
+				self.map.player(cmd[1])
 			elif cmd[0] == 'quit' or cmd[0] == 'q':
 				break
 		# after loop break

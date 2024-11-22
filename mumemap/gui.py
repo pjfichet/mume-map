@@ -81,7 +81,16 @@ TILES = {
 	# actually, attention flag is used for so many things it becomes meaningless
 	"attention": pyglet.image.load(os.path.join(TILESDIR, "helmet.png")),
 	# player
-	"player": pyglet.image.load(os.path.join(TILESDIR, "player.png")),
+	"cleric": pyglet.image.load(os.path.join(TILESDIR, "cleric.png")),
+	"elf-dark": pyglet.image.load(os.path.join(TILESDIR, "elf-dark.png")),
+	"elf-grey": pyglet.image.load(os.path.join(TILESDIR, "elf-grey.png")),
+	"elf": pyglet.image.load(os.path.join(TILESDIR, "elf.png")),
+	"helf-dark": pyglet.image.load(os.path.join(TILESDIR, "helf-dark.png")),
+	"helf-light": pyglet.image.load(os.path.join(TILESDIR, "helf-light.png")),
+	"orc": pyglet.image.load(os.path.join(TILESDIR, "orc.png")),
+	"troll": pyglet.image.load(os.path.join(TILESDIR, "troll.png")),
+	"warrior": pyglet.image.load(os.path.join(TILESDIR, "warrior.png")),
+
 	# other
 	"label": pyglet.image.load(os.path.join(TILESDIR, "label.png")),
 	"noid": pyglet.image.load(os.path.join(TILESDIR, "noid.png")),
@@ -255,7 +264,7 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		# Be sure the player coordinates are part of the window
 		if z == 0 and x >= 0 and x < self.col and y >= 0 and y < self.row:
 			# draw the player on layer 3
-			self.draw_tile(x, y, 3, "player")
+			self.draw_tile(x, y, 3, self.world.playerTile)
 
 	def draw_tile(self, x: int, y: int, z: int, tile: str) -> None:
 		logger.debug(f"Drawing tile: {x} {y} {tile}")

@@ -83,6 +83,7 @@ class Map:
 		self.labels = {}
 		self.synced = False
 
+
 	def log(self, filename='map.log', verbosity=2, redirectstderr=False):
 		log.log(filename, verbosity, redirectstderr)
 
@@ -389,6 +390,13 @@ class Map:
 		result.sort(key=lambda x: x.distance(self.currentRoom))
 		for room in result[:10]:
 			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {", ".join(room.ingredients)}")
+
+	def player(self, tile):
+		if tile in ('cleric', 'elf-dark', 'elf-grey', 'elf', 'helf-dark', 'helf-light', 'orc', 'troll', 'warrior'):
+			self.playerTile = tile
+			self._gui_queue.put(("on_mapSync", self.currentRoom))
+		else:
+			self.echo("Player can be: cleric, elf-dark, elf-grey, elf, helf-dark, helf-light, orc, troll, warrior.")
 
 	def echo(self, message):
 		print(f"map: {message}")
