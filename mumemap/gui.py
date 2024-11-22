@@ -246,9 +246,9 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 				break
 		if room.label:
 			self.draw_tile(x, y, 2, "label")
-		# show path
-		if room in self.world.currentPath:
-			logger.info("Drawing path for {room.vnum}.")
+		# show highlighted rooms (path and find results)
+		if room.highlight:
+			logger.debug("Highlighting {room.vnum}.")
 			self.draw_tile(x, y, 2, "path")
 		# Highlights rooms without serverid
 		if room.serverid == "0":

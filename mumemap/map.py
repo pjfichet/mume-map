@@ -55,6 +55,7 @@ class Room:
 		self.sundeath = "undefined"
 		self.label = ""
 		self.avoid = False
+		self.highlight = False
 		self.mobFlags = ()
 		self.loadFlags = ()
 		self.ingredients = ()
@@ -347,6 +348,7 @@ class Map:
 		result = []
 		while room is not origin:
 			room = parents[room]
+			room.highlight = True
 			self.currentPath.append(room)
 		logger.info("Path found.")
 		self.echo("Path found.")
@@ -383,6 +385,7 @@ class Map:
 		result = []
 		for vnum, room in self.rooms.items():
 			if ingredient in room.ingredients:
+				room.highlight = True
 				result.append(room)
 		if not result:
 			self.echo(f"Nothing found.")
