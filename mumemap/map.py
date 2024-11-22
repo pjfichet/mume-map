@@ -29,6 +29,19 @@ terrain_cost = {
 	"deathtrap": 1000.0,
 }
 
+player_tiles = (
+	'cleric',
+	'elf-dark',
+	'elf-grey',
+	'elf-light',
+	'elf',
+	'helf-dark',
+	'helf-light',
+	'orc',
+	'troll',
+	'warrior',
+)
+
 class Exit:
 	def __init__(self):
 		self._direction = ""
@@ -399,11 +412,11 @@ class Map:
 
 
 	def player(self, tile):
-		if tile in ('cleric', 'elf-dark', 'elf-grey', 'elf', 'helf-dark', 'helf-light', 'orc', 'troll', 'warrior'):
+		if tile in player_tile:
 			self.playerTile = tile
 			self._gui_queue.put(("on_mapSync", self.currentRoom))
 		else:
-			self.echo("Player can be: cleric, elf-dark, elf-grey, elf, helf-dark, helf-light, orc, troll, warrior.")
+			self.echo(f"Player can be: {', '.join(player_tile)}.")
 
 	def echo(self, message):
 		print(f"map: {message}")

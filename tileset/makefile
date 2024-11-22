@@ -15,7 +15,7 @@ cavern cavern-dark tunnel tunnel-dark road road-dark city city-dark \
 indoor indoor-dark random random-dark undefined \
 armour label exitdown exitup guild \
 herb key quest rent shop aggressive-mob super-mob elite-mob treasure \
-walleast wallnorth wallsouth wallwest weapon elf elf-dark \
+walleast wallnorth wallsouth wallwest weapon elf elf-dark elf-light \
 elf-grey cleric warrior orc troll helf-light helf-dark \
 root noid path attention helmet
 
