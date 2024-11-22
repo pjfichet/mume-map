@@ -28,25 +28,26 @@ class Emulation:
 		self.vnum('17903') # moria east gate
 		while True:
 			cmd = input("> ")
-			if cmd == 'k':
+			cmd = cmd.split(' ')
+			if cmd[0] == 'k':
 				self.direction('north')
-			elif cmd == 'h':
+			elif cmd[0] == 'h':
 				self.direction('west')
-			elif cmd == 'j':
+			elif cmd[0] == 'j':
 				self.direction('south')
-			elif cmd == 'l':
+			elif cmd[0] == 'l':
 				self.direction('east')
-			elif cmd == 'u':
+			elif cmd[0] == 'u':
 				self.direction('up')
-			elif cmd == 'n':
+			elif cmd[0] == 'n':
 				self.direction('down')
-			elif cmd.isdigit():
+			elif cmd[0].isdigit():
 				self.vnum(cmd)
-			elif cmd.split(' ')[0] == 'label':
-				self.map.findLabel(cmd.split(' ')[1])
-			elif cmd.split(' ')[0] == 'ingredient':
-				self.map.findIngredient(cmd.split(' ')[1])
-			elif cmd == 'quit' or cmd == 'q':
+			elif cmd[0] == 'label' and len(cmd) > 1:
+				self.map.findLabel(cmd[1])
+			elif cmd[0] == 'ingredient' and len(cmd) > 1:
+				self.map.findIngredient(cmd[1])
+			elif cmd[0] == 'quit' or cmd[0] == 'q':
 				break
 		# after loop break
 		print("Goodbye.")
