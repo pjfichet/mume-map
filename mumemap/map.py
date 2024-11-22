@@ -358,8 +358,15 @@ class Map:
 
 	def findNote(self, string):
 		for vnum, room in self.rooms.items():
-			if string in room.note:
-				self.echo(f"Room {room.vnum}: {room.note}")
+			if ingredient in room.note:
+				room.highlight = True
+				result.append(room)
+		if not result:
+			self.echo(f"Nothing found.")
+			return
+		result.sort(key=lambda x: x.distance(self.currentRoom))
+		for room in result[:10]:
+			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {room.note}")
 
 	def findVnum(self, vnum):
 		if vnum in self.rooms:
