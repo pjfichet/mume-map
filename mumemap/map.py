@@ -370,6 +370,8 @@ class Map:
 		result.sort(key=lambda x: x.distance(self.currentRoom))
 		for room in result[:10]:
 			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {room.note}")
+		self._gui_queue.put(("on_mapSync", self.currentRoom))
+
 
 	def findVnum(self, vnum):
 		if vnum in self.rooms:
@@ -393,6 +395,8 @@ class Map:
 		result.sort(key=lambda x: x.distance(self.currentRoom))
 		for room in result[:10]:
 			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {", ".join(room.ingredients)}")
+		self._gui_queue.put(("on_mapSync", self.currentRoom))
+
 
 	def player(self, tile):
 		if tile in ('cleric', 'elf-dark', 'elf-grey', 'elf', 'helf-dark', 'helf-light', 'orc', 'troll', 'warrior'):
