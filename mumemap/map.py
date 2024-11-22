@@ -379,7 +379,6 @@ class Map:
 				self.echo(f"Room {vnum}: {room.note}")
 
 	def findIngredient(self, ingredient):
-		self.echo(f"searching for -{ingredient}-")
 		result = []
 		for vnum, room in self.rooms.items():
 			if ingredient in room.ingredients:
