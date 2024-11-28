@@ -374,7 +374,7 @@ class Map:
 
 	def findNote(self, string):
 		for vnum, room in self.rooms.items():
-			if ingredient in room.note:
+			if string in room.note:
 				room.highlight = True
 				result.append(room)
 		if not result:
