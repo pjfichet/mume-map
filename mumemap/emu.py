@@ -42,7 +42,7 @@ class Emulation:
 			elif cmd[0] == 'n':
 				self.direction('down')
 			elif cmd[0].isdigit():
-				self.vnum(cmd)
+				self.vnum(cmd[0])
 			elif cmd[0] == 'label' and len(cmd) > 1:
 				self.map.findLabel(cmd[1])
 			elif cmd[0] == 'ingredient' and len(cmd) > 1:
