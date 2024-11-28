@@ -410,6 +410,20 @@ class Map:
 			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {", ".join(room.ingredients)}")
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
 
+	def findName(self, string):
+		result = []
+		string = fmt.stringAscii(string)
+		for vnum, room in self.rooms.items():
+			if string in room.name.lower():
+				room.highlight = True
+				result.append(room)
+		if not result:
+			self.echo(f"Nothing found.")
+			return
+		result.sort(key=lambda x: x.distance(self.currentRoom))
+		for room in result[:10]:
+			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {room.name}")
+		self._gui_queue.put(("on_mapSync", self.currentRoom))
 
 	def player(self, tile):
 		if tile in player_tiles:
