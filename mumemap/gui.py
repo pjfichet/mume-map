@@ -162,7 +162,7 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		# room selected by right click
 		self.selectedRoom = None
 		# Pyglet window
-		super().__init__(self.col * self.square, self.row * self.square, caption="MPM", resizable=True)
+		super().__init__(self.col * self.square, self.row * self.square, caption="Mumemap", resizable=True)
 		logger.info(f"Creating window {self}")
 		self._gui_queue = self.world._gui_queue
 		# Sprites
