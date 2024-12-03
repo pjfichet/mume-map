@@ -318,13 +318,15 @@ class Map:
 		if self.currentRoom.note:
 			self.echo(f"Note: {self.currentRoom.note}")
 
-	def path(self, label):
-		if not label:
+	def path(self, dest):
+		if not dest:
 			self.currentPath = []
-		if label in self.labels:
-			self._path(self.currentRoom, self.rooms[self.labels[label]])
+		elif dest in self.labels:
+			self._path(self.currentRoom, self.rooms[self.labels[dest]])
+		elif dest in self.rooms:
+			self._path(self.currentRoom, self.rooms[dest])
 		else:
-			self.echo(f"Label {label} not found.")
+			self.echo(f"Room {dest} not found.")
 			self.currentPath = []
 
 	def _path(self, origin, destination):
@@ -366,7 +368,7 @@ class Map:
 		logger.info("Path found.")
 		self.echo("Path found.")
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
-		
+
 	def findLabel(self, string):
 		for label in self.labels:
 			if string in label:
