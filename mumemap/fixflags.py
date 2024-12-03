@@ -87,8 +87,6 @@ class FixFlags:
 			elif 'rattlesnake' in room['ingredient_flags']:
 				room['mob_flags'].append('rattlesnake')
 				self.rattlesnakes += 1
-		if 'rattlesnake' in room['mob_flags'] and 'attention' in room['load_flags']:
-				room['load_flags'].remove('attention')
 
 	def fix_roots(self, vnum, room):
 		if 'roots' not in room['mob_flags']:
@@ -99,8 +97,6 @@ class FixFlags:
 			elif flags.ROOTS_REGEX.search(room['contents']):
 				room['mob_flags'].append('roots')
 				self.roots += 1
-		if 'roots' in room['mob_flags'] and 'attention' in room['load_flags']:
-				room['load_flags'].remove('attention')
 
 	def fix_attention(self, vnum, room):
 		if 'attention' in room['load_flags']:
