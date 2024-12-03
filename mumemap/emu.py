@@ -72,8 +72,8 @@ class Emulation:
 				self.vnum(cmd[0])
 			elif cmd[0] == 'label' and len(cmd) > 1:
 				self.map.findLabel(cmd[1])
-			elif cmd[0] == 'ingredient' and len(cmd) > 1:
-				self.map.findIngredient(cmd[1])
+			elif cmd[0] == 'flag' and len(cmd) > 1:
+				self.map.findFlag(cmd[1])
 			elif cmd[0] == 'name' and len(cmd) > 1:
 				self.map.findName(" ".join(cmd[1:]))
 			elif cmd[0] == 'path' and len(cmd) > 1:

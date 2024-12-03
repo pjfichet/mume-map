@@ -102,7 +102,41 @@ TILES = {
 
 pyglet.options["debug_gl"] = False
 
-
+# Ordered list of flags: only the first found is displayed.
+# Since python 3.7 a dict must preserve its order.
+DISPLAY_FLAGS = {
+	# rent
+	"rent": "rent",
+	# guilds
+	"guild": "guild",
+	"scout_guild": "guild",
+	"mage_guild": "guild",
+	"cleric_guild": "guild",
+	"warrior_guild": "guild",
+	"ranger_guild": "guild",
+	# shops
+	"shop": "shop",
+	"weapon_shop": "shop",
+	"armour_shop": "shop",
+	"food_shop": "shop",
+	"pet_shop": "shop",
+	# quests
+	"quest_mob": "quest_mob",
+	# danger
+	"super_mob": "super_mob",
+	"elite_mob": "elite_mob",
+	"roots": "elite_mob",
+	"rattlesnake": "elite_mob",
+	"aggressive_mob": "aggressive_mob",
+	# attention
+	"attention": "attention",
+	# load
+	"treasure": "treasure",
+	"key": "key",
+	"armour": "armour",
+	"weapon": "weapon",
+	"herb": "herb",
+}
 
 class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 	def __init__(self, world):
@@ -226,30 +260,16 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		for direction in ("up", "down"):
 			if direction in room.exits:
 				self.draw_tile(x, y, 1, "exit" + direction)
-		# draw a single load flag on layer 2
-		flag: str
-		for flag in room.loadFlags:
-			if flag in ("attention", "treasure", "key", "armour", "weapon", "herb"):
-				self.draw_tile(x, y, 2, flag)
-				break
-		# draw a single mob flag on layer 2
-		for flag in room.mobFlags:
-			if flag in ("roots", "rattlesnake", "elite_mob"):
-				self.draw_tile(x, y, 2, "elite_mob")
-			if flag in ("aggressive_mob", "super_mob", "rent", "quest_mob"):
-				self.draw_tile(x, y, 2, flag)
-				break
-			elif re.search("shop", flag) is not None:
-				self.draw_tile(x, y, 2, "shop")
-				break
-			elif re.search("guild", flag) is not None:
-				self.draw_tile(x, y, 2, "guild")
-				break
-		if room.label:
+		# draw a single flag on layer 2
+		flagged = False
+		for flag in DISPLAY_FLAGS:
+			if flag in room.flags:
+				self.draw_tile(x, y, 2, DISPLAY_FLAGS[flag])
+				flagged = True
+		if not flagged and room.label:
 			self.draw_tile(x, y, 2, "label")
 		# show highlighted rooms (path and find results)
 		if room.highlight:
-			logger.debug("Highlighting {room.vnum}.")
 			self.draw_tile(x, y, 2, "path")
 		# Highlights rooms without serverid
 		if room.serverid == "0":

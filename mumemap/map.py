@@ -70,9 +70,7 @@ class Room:
 		self.label = ""
 		self.avoid = False
 		self.highlight = False
-		self.mobFlags = ()
-		self.loadFlags = ()
-		self.ingredients = ()
+		self.flags = []
 		self.x = 0
 		self.y = 0
 		self.z = 0
@@ -154,9 +152,9 @@ class Map:
 			newroom.desc = roomdict["description"]
 			newroom.dynadesc = roomdict["contents"].lstrip()
 			newroom.light = roomdict["light"]
-			newroom.loadFlags = set(roomdict["load_flags"])
-			newroom.mobFlags = set(roomdict["mob_flags"])
-			newroom.ingredients = set(roomdict["ingredient_flags"])
+			newroom.flags += roomdict["load_flags"]
+			newroom.flags += roomdict["mob_flags"]
+			newroom.flags += roomdict["ingredient_flags"]
 			newroom.name = roomdict["name"]
 			newroom.note = roomdict["note"]
 			if vnum in self.labelled:
@@ -411,18 +409,18 @@ class Map:
 			if room.note:
 				self.echo(f"Room {vnum}: {room.note}")
 
-	def findIngredient(self, ingredient):
+	def findFlag(self, flag):
 		result = []
 		for vnum, room in self.rooms.items():
-			if ingredient in room.ingredients:
+			if flag in room.flags:
 				room.highlight = True
 				result.append(room)
 		if not result:
-			self.echo(f"Nothing found.")
+			self.echo("Nothing found.")
 			return
 		result.sort(key=lambda x: x.distance(self.currentRoom))
 		for room in result[:10]:
-			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {", ".join(room.ingredients)}")
+			self.echo("Room {room.vnum} ({room.distance(self.currentRoom)}): {", ".join(room.flags)}")
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
 
 	def findName(self, string):
