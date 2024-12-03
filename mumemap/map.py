@@ -149,7 +149,7 @@ class Map:
 			newroom.light = roomdict["light"]
 			newroom.loadFlags = set(roomdict["load_flags"])
 			newroom.mobFlags = set(roomdict["mob_flags"])
-			newroom.ingredients = set(roomdict["ingredients"])
+			newroom.ingredients = set(roomdict["ingredient_flags"])
 			newroom.name = roomdict["name"]
 			newroom.note = roomdict["note"]
 			newroom.label = roomdict["label"]
