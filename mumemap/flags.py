@@ -199,4 +199,5 @@ NOTES_SUBSTITUTIONS = {
 	'wood anemone': 'anemone',
 	'raspberries nettle': 'raspberries, nettle',
 	'tarragon foxglove belladonna': 'tarragon, foxglove, belladonna',
+	'small roots': 'roots',
 }
