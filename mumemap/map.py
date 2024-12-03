@@ -321,6 +321,7 @@ class Map:
 	def path(self, dest):
 		if not dest:
 			self.currentPath = []
+			self.unhighlight()
 		elif dest in self.labels:
 			self._path(self.currentRoom, self.rooms[self.labels[dest]])
 		elif dest in self.rooms:
@@ -367,6 +368,11 @@ class Map:
 			self.currentPath.append(room)
 		logger.info("Path found.")
 		self.echo("Path found.")
+		self._gui_queue.put(("on_mapSync", self.currentRoom))
+
+	def unhighlight(self):
+		for vnum, room in self.rooms.items():
+			room.highlight = False
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
 
 	def findLabel(self, string):
