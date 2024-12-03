@@ -40,12 +40,12 @@ class FixFlags:
 		data = json.dumps(self.oldjson, sort_keys=True, indent=2)
 		with open(newfile, "w") as f:
 			f.write(data)
-		print(f"Fixed {self.notes} notes, {self.rattlesnakes} rattlesnakes and {self.roots} roots.")
+		print(f"Fixed {self.notes} ingredient notes, {self.rattlesnakes} rattlesnakes and {self.roots} roots.")
 		#print(self.flags)
 
 	def fix_ingredients(self, vnum, room):
-		if 'ingredients' not in room:
-			room['ingredients'] = []
+		if 'ingredient_flags' not in room:
+			room['ingredient_flags'] = []
 		note = room['note'].lower()
 		note = re.sub(',\n', ', ', note)
 		note = re.sub('\n', ', ', note)
@@ -58,19 +58,19 @@ class FixFlags:
 		for item in notelist:
 			i = item.strip(' ')
 			if i in flags.INGREDIENTS_FLAGS:
-				room['ingredients'].append(i)
+				room['ingredient_flags'].append(i)
 				toadd = True
 				newlist.remove(item)
 			elif i:
 				for j in i.split(' '):
 					if j in flags.INGREDIENTS_FLAGS:
-						room['ingredients'].append(j)
+						room['ingredient_flags'].append(j)
 						toadd = True
 						toprint = True
 		# rewrite the note
 		room['note'] = ",".join(newlist).strip(' ')
-		#if room['ingredients'] and room['note']:
-		#	print(f"{vnum}:\n\t{room['note']}\n\t{room['ingredients']}")
+		#if room['ingredient_flags'] and room['note']:
+		#	print(f"{vnum}:\n\t{room['note']}\n\t{room['ingredient_flags']}")
 		if toadd:
 			self.notes += 1
 
@@ -84,7 +84,7 @@ class FixFlags:
 			elif 'rattlesnake' in room['contents']:
 				room['mob_flags'].append('rattlesnake')
 				self.rattlesnakes += 1
-			elif 'rattlesnake' in room['ingredients']:
+			elif 'rattlesnake' in room['ingredient_flags']:
 				room['mob_flags'].append('rattlesnake')
 				self.rattlesnakes += 1
 		if 'rattlesnake' in room['mob_flags'] and 'attention' in room['load_flags']:
