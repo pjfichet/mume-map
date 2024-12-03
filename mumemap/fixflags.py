@@ -101,7 +101,7 @@ class FixFlags:
 	def fix_attention(self, vnum, room):
 		if 'attention' in room['load_flags']:
 			flags = ", ".join(room['mob_flags'] + room['load_flags'])
-			print(f"{vnum} {room['name']}:\n{room['note']} - {flags}")
+			print(f"{vnum}: {room['name']}\nnote: {room['note']}\nflags: {flags}\n")
 
 	def countflags(self, room):
 		for flag in room['mob_flags']:
