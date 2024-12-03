@@ -38,7 +38,6 @@ class Update:
 	def updateroom(self, vnum, newroom):
 		if vnum not in self.oldjson:
 			print(f"{vnum}: new room.")
-			newroom['label'] = ''
 			self.newrooms += 1
 			return
 		### check oldroom
@@ -50,8 +49,6 @@ class Update:
 			#print(f"{vnum}: add server_id {newroom['server_id']}")
 		elif newroom['server_id'] != newroom['server_id']:
 			print(f"{vnum}: server_id differ.")
-		# label
-		newroom['label'] = oldroom['label']
 		# check room identity
 		if oldroom['coordinates'] != newroom['coordinates']:
 			print(f"{vnum}: coordinates differ ({oldroom['coordinates']} -> {newroom['coordinates']}).")
