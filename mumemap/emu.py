@@ -17,10 +17,37 @@ class Emulation:
 
 	def room(self, room):
 		self.map.currentRoom = room
-		print(f"\x1b[0;32m{room.x} {room.y}, {room.z}: {room.name}\x1b[0m")
+		if room.label:
+			print(f"\x1b[0;32m{room.vnum} {room.label}: {room.name}\x1b[0m")
+		else:
+			print(f"\x1b[0;32m{room.vnum} {room.label}: {room.name}\x1b[0m")
 		print(self.map.currentRoom.desc)
-		print(self.map.currentRoom.dynadesc)
-		self.map.sync(self.map.currentRoom)
+		if self.map.currentRoom.dynadesc:
+			print(self.map.currentRoom.dynadesc)
+		self.exits(room)
+		if room.note:
+			print(f"Note: {room.note}")
+		#self.map.sync(self.map.currentRoom)
+		self.map._gui_queue.put(("on_mapSync", self.map.currentRoom))
+
+	def exits(self, room):
+		exits = None
+		for direction, exit in room.exits.items():
+			if exits:
+				exits += ', '
+			else:
+				exits = "Exits: "
+			if exit.door:
+				exits += f"'{exit.door}' {direction}"
+			else:
+				exits += direction
+			if exit.to == 'death' and 'hidden' in exit.doorFlags:
+				exits += " (death, hidden)"
+			elif exit.to == 'death':
+				exits += " (death)"
+			elif 'hidden' in exit.doorFlags:
+				exits += " (hidden)"
+		print(exits)
 
 	def run(self, datafile):
 		print("Hello Middle Earth !")
