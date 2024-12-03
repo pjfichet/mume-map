@@ -49,9 +49,9 @@ class Emulation:
 				exits += " (hidden)"
 		print(exits)
 
-	def run(self, datafile):
+	def run(self, datafile, labelfile):
 		print("Hello Middle Earth !")
-		self.map.open(datafile)
+		self.map.open(datafile, labelfile)
 		self.vnum('17903') # moria east gate
 		while True:
 			cmd = input("> ")

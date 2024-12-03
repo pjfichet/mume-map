@@ -4,6 +4,7 @@ import logging
 from queue import SimpleQueue
 import heapq
 from difflib import SequenceMatcher
+import sys
 from . import gui
 from . import fmt
 from . import log
@@ -89,21 +90,29 @@ class Map:
 	def __init__(self):
 		self._gui_queue = SimpleQueue()
 		self.window = gui.GuiThread(self)
-		self.datafile = ''
+		self.mapfile = ''
+		self.labelfile = ''
 		self.database = {}
 		self.rooms = {}
 		self.currentRoom = Room()
 		self.currentPath = []
 		self.labels = {}
+		self.labelled = {} # invert of self.labels
 		self.synced = False
 		self.playerTile = 'helf-light'
 
 	def log(self, filename='map.log', verbosity=2, redirectstderr=False):
 		log.log(filename, verbosity, redirectstderr)
 
-	def open(self, datafile):
-		self.datafile = datafile
-		self.load()
+	def open(self, mapfile, labelfile):
+		# load labels first as loadRooms() need them.
+		self.labelfile = labelfile
+		self.labels = self.loadFile(labelfile)['labels']
+		self.labelled = {value: key for key, value in self.labels.items()}
+		self.mapfile = mapfile
+		self.database = self.loadFile(mapfile)
+		self.loadRooms()
+		self.currentRoom = self.rooms["0"]
 		self.window.start()
 
 	def dump(self):
@@ -120,19 +129,17 @@ class Map:
 			logger.info(f"Added {serverids} server_id to map.")
 			self.echo(f"Added {serverids} server_id to map.")
 		data = json.dumps(self.database, sort_keys=True, indent=2)
-		with open(self.datafile, "w") as f:
+		with open(self.mapfile, "w") as f:
 			f.write(data)
-		logger.info(f"Map written on {self.datafile}.")
+		logger.info(f"Map written on {self.mapfile}.")
 
-	def load(self):
-		if not os.path.exists(self.datafile):
-			return f"Error: {mapfile} does not exist."
-		elif os.path.isdir(self.datafile):
-			return f"Error: {mapfile} is a directory, not a file."
-		with open(self.datafile, "rb") as f:
-			self.database = json.load(f)
-		self.loadRooms()
-		self.currentRoom = self.rooms["0"]
+	def loadFile(self, jsonfile):
+		if not os.path.exists(jsonfile):
+			sys.exit(f"Error: {jsonfile} does not exist.")
+		elif os.path.isdir(jsonfile):
+			sys.exit(f"Error: {jsonfile} is a directory, not a file.")
+		with open(jsonfile, "rb") as f:
+			return json.load(f)
 
 	def loadRooms(self):
 		serverids = 0
@@ -152,8 +159,8 @@ class Map:
 			newroom.ingredients = set(roomdict["ingredient_flags"])
 			newroom.name = roomdict["name"]
 			newroom.note = roomdict["note"]
-			newroom.label = roomdict["label"]
-			self.labels[newroom.label] = vnum
+			if vnum in self.labelled:
+				newroom.label = self.labelled[vnum]
 			newroom.portable = roomdict["portable"]
 			newroom.rideable = roomdict["ridable"]
 			newroom.sundeath = roomdict["sundeath"]

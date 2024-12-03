@@ -5,7 +5,7 @@ import os
 
 def usage():
 	print("Usage:")
-	print("mumemap -e map.json                      # start emulation")
+	print("mumemap -e map.json label.json           # start emulation")
 	print("mumemap -u map.json new.json out.json    # update map file")
 	print("mumemap -f map.json out.json             # fix map flags")
 
@@ -25,13 +25,14 @@ def fileexistsnot(file):
 if len(sys.argv) == 2 and sys.argv[1] == "-h":
 	# help
 	usage()
-elif len(sys.argv) == 3 and sys.argv[1] == "-e":
+elif len(sys.argv) == 4 and sys.argv[1] == "-e":
 	# emulation
 	fileexists(sys.argv[2])
+	fileexists(sys.argv[3])
 	from mumemap.emu import Emulation
 	e = Emulation()
 	e.log('map.log', 4, False)
-	e.run(sys.argv[2])
+	e.run(sys.argv[2], sys.argv[3])
 elif len(sys.argv) == 5 and sys.argv[1] == "-u":
 	# update
 	fileexists(sys.argv[2])
