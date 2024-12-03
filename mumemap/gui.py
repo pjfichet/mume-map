@@ -99,9 +99,6 @@ TILES = {
 	"path": pyglet.image.load(os.path.join(TILESDIR, "path.png")),
 }
 
-
-pyglet.options["debug_gl"] = False
-
 # Ordered list of flags: only the first found is displayed.
 # Since python 3.7 a dict must preserve its order.
 DISPLAY_FLAGS = {
