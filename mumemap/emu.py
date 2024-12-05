@@ -70,12 +70,8 @@ class Emulation:
 				self.direction('down')
 			elif cmd[0].isdigit():
 				self.vnum(cmd[0])
-			elif cmd[0] == 'label' and len(cmd) > 1:
-				self.map.findLabel(cmd[1])
-			elif cmd[0] == 'flag' and len(cmd) > 1:
-				self.map.findFlag(cmd[1])
-			elif cmd[0] == 'name' and len(cmd) > 1:
-				self.map.findName(" ".join(cmd[1:]))
+			elif cmd[0] == 'find' and len(cmd) > 2:
+				self.map.findRoom(cmd[1], cmd[2])
 			elif cmd[0] == 'path' and len(cmd) > 1:
 				self.map.path(cmd[1])
 			elif cmd[0] == 'player' and len(cmd) > 1:
