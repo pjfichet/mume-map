@@ -72,6 +72,8 @@ class Emulation:
 				self.vnum(cmd[0])
 			elif cmd[0] == 'find' and len(cmd) > 2:
 				self.map.findRoom(cmd[1], cmd[2])
+			elif cmd[0] == 'clear':
+				self.map.unhighlight()
 			elif cmd[0] == 'path' and len(cmd) > 1:
 				self.map.path(cmd[1])
 			elif cmd[0] == 'player' and len(cmd) > 1:
