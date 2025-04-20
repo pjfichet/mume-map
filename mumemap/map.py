@@ -223,6 +223,7 @@ class Map:
 				yield (vnum, obj, differenceX, differenceY, differenceZ)
 				
 	def move(self, direction, serverid, name, desc):
+	"""Synchronize by movement direction."""
 		if not direction and not serverid and not name:
 			return
 		logger.debug(f"Movement \"{direction}\" to room \"{name}\", \"{serverid}\".")
@@ -239,6 +240,7 @@ class Map:
 		self.room(serverid, name, desc)
 
 	def room(self, serverid, name, desc):
+	"""Synchronize by room content (serverid, name, description)"""
 		if not name or not desc:
 			return
 		logger.debug(f"Searching for room \"{name}\", \"{serverid}\".")
@@ -270,6 +272,7 @@ class Map:
 		logger.warning(f"Room not found: (\"{serverid}\", \"{name}\", \"\"\"{desc}\"\"\")")
 
 	def match(self, serverid, name, desc):
+		"""Add server_id to room."""
 		logger.debug(f"Test if room {self.currentRoom.vnum} matches \"{name}\", \"{serverid}\".")
 		if (serverid == '0' or serverid == ''
 			or not name or not desc):
