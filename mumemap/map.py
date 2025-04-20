@@ -379,34 +379,27 @@ class Map:
 		for vnum, room in self.rooms.items():
 			room.highlight = False
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
-
-	def findRoom(self, attribute, value):
+	def findRoom(self, value):
 		result = []
-		# find label
-		if attribute == 'label':
-			for label in self.labels:
-				if value in label:
-					result.append(self.rooms[self.labels[label]])
-		# find Vnum
-		elif attribute == 'vnum':
-			if value in self.rooms:
-				result.append(self.rooms[value])
-		# find regular room attributes:
-		elif attribute in ('flags', 'note', 'name'):
-			for vnum, room in self.rooms.items():
-				if value in getattr(room, attribute):
-					room.highlight = True
-					result.append(room)
-		else:
-			self.echo(f"{attribute} is not a valid room attribute.")
-			return
+		for label in self.labels:
+			if value in label:
+				result.append((self.rooms[self.labels[label]], 'label'))
+		for vnum, room in self.rooms.items():
+			if value in room.name.lower():
+				result.append((room, 'name'))
+			if value in room.note.lower():
+				result.append((room, 'note'))
+			if value in room.flags:
+				result.append((room, 'flags'))
 		if not result:
 			self.echo(f"Nothing found.")
 			return
-		result.sort(key = lambda x: x.distance(self.currentRoom))
-		for room in result[:10]:
-			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}): {getattr(room, attribute)}")
+		result.sort(key = lambda x: x[0].distance(self.currentRoom))
+		for room, attribute in result[:10]:
+			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}, {attribute}): {getattr(room, attribute)}")
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
+
+
 
 	def player(self, tile):
 		if tile in player_tiles:
