@@ -312,7 +312,7 @@ class Map:
 		self.currentRoom = room
 		self.info()
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
-		logger.info(f"Synced to room {self.currentRoom.vnum}")
+		logger.debug(f"Synced to room {self.currentRoom.vnum}")
 
 	def info(self):
 		hidden = None

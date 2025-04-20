@@ -215,7 +215,7 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 		self.draw_map(self.cx, self.cy, self.cz)
 
 	def on_mapSync(self, currentRoom):
-		logger.info(f"Map synced to room {currentRoom.vnum}")
+		logger.debug(f"Map synced to room {currentRoom.vnum}")
 		# reset player position, center the map around
 		self.playerRoom = currentRoom
 		self.draw_map(currentRoom.x, currentRoom.y, currentRoom.z)
