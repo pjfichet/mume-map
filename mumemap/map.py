@@ -103,7 +103,6 @@ class Room:
 		return(exits)
 
 
-
 class Map:
 	def __init__(self):
 		self._gui_queue = SimpleQueue()
@@ -433,8 +432,6 @@ class Map:
 		for room, attribute in result[:10]:
 			self.echo(f"Room {room.vnum} ({room.distance(self.currentRoom)}, {attribute}): {getattr(room, attribute)}")
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
-
-
 
 	def player(self, tile):
 		if tile in player_tiles:
