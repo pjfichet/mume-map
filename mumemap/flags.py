@@ -201,3 +201,5 @@ NOTES_SUBSTITUTIONS = {
 	'tarragon foxglove belladonna': 'tarragon, foxglove, belladonna',
 	'small roots': 'roots',
 }
+
+VALID_FLAGS = LOAD_FLAGS + MOB_FLAGS + INGREDIENTS_FLAGS
