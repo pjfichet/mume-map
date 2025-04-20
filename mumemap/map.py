@@ -83,6 +83,26 @@ class Room:
 	def distance(self, room):
 		return abs(room.x - self.x) + abs(room.y - self.y) + abs(room.z - self.z)
 
+	def printExits(self):
+		exits = None
+		for direction, exit in self.exits.items():
+			if exits:
+				exits += ', '
+			else:
+				exits = "Exits: "
+			if exit.door:
+				exits += f"'{exit.door}' {direction}"
+			else:
+				exits += direction
+			if exit.to == 'death' and 'hidden' in exit.doorFlags:
+				exits += " (death, hidden)"
+			elif exit.to == 'death':
+				exits += " (death)"
+			elif 'hidden' in exit.doorFlags:
+				exits += " (hidden)"
+		return(exits)
+
+
 
 class Map:
 	def __init__(self):
@@ -379,6 +399,21 @@ class Map:
 		for vnum, room in self.rooms.items():
 			room.highlight = False
 		self._gui_queue.put(("on_mapSync", self.currentRoom))
+
+	def infoRoom(self, vnum=None):
+		if not vnum:
+			room = self.currentRoom
+			vnum = self.currentRoom.vnum
+		elif vnum in self.rooms:
+			room = self.rooms[vnum]
+		else:
+			self.echo(f"Room {vnum} not found.")
+			return
+		self.echo(f"{vnum}: {room.name} ({room.label})")
+		self.echo(f"{vnum}: {room.printExits()}")
+		self.echo(f"{vnum}: {", ".join(room.flags)}")
+		self.echo(f"{vnum}: {room.note}")
+
 	def findRoom(self, value):
 		result = []
 		for label in self.labels:

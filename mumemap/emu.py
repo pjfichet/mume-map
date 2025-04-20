@@ -78,6 +78,11 @@ class Emulation:
 				self.map.path(cmd[1])
 			elif cmd[0] == 'player' and len(cmd) > 1:
 				self.map.player(cmd[1])
+			elif cmd[0] == 'info':
+				if len(cmd) > 1:
+					self.map.infoRoom(cmd[1])
+				else:
+					self.map.infoRoom(None)
 			elif cmd[0] == 'quit' or cmd[0] == 'q':
 				break
 		# after loop break
