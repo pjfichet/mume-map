@@ -306,6 +306,21 @@ class Map:
 			#logger.warning(f"Deleting wrong serverid {self.currentRoom.serverid} from room {self.currentRoom.vnum}.")
 			#self.currentRoom.serverid = '0'
 
+	def diff(self, name, desc):
+		"""Calculates the diff between mume room and map room"""
+		logger.debug(f"Calculate diff of {self.currentRoom.vnum} with server info.")
+		name = fmt.stringAscii(name)
+		desc = fmt.stringAscii(desc)
+		if self.currentRoom.name == name:
+			nameratio = 1
+		else:
+			nameratio = SequenceMatcher(None, self.currentRoom.name.lower(), name.lower()).ratio()
+		if self.currentRoom.desc == desc:
+			descratio = 1
+		else:
+			descratio = SequenceMatcher(None, self.currentRoom.desc.lower(), desc.lower()).ratio()
+		self.echo(f"Diff name:{nameratio}, desc:{descratio}")
+
 	def sync(self, room):
 		self.synced = True
 		self.currentRoom = room
