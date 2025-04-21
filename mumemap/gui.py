@@ -320,17 +320,17 @@ class Window(pyglet.window.Window):  # type: ignore[misc, no-any-unimported]
 				self.selectedRoom = self.visibleRooms[x, y]
 				self.world.echo(f"Click on room {self.selectedRoom.vnum} ({self.selectedRoom.x}, {self.selectedRoom.y}, {self.selectedRoom.z}).")
 			else:
-				self.world.echo(f"Click on coordinates (cx, cy, self.cz).")
+				self.world.echo(f"Click on coordinates ({cx}, {cy}, {self.cz}).")
 
-	def on_mouse_release(self, wx, wy, buttons, modifiers):
-		if buttons != pyglet.window.mouse.RIGHT:
-			return
-		logger.debug(f"Mouse release on {wx} {wy}.")
-		x: int = int(wx / self.square)
-		y: int = int(wy / self.square)
-		cx, cy = self.getWorldCoordinates(x, y)
-		if self.selectedRoom.x != cx or self.selectedRoom.y != cy:
-			print(f"moving {self.selectedRoom.vnum} ({self.selectedRoom.x}, {self.selectedRoom.y}, {self.selectedRoom.z}) to ({cx}, {cy}, {self.selectedRoom.z}).")
+	#def on_mouse_release(self, wx, wy, buttons, modifiers):
+	#	if buttons != pyglet.window.mouse.RIGHT:
+	#		return
+	#	logger.debug(f"Mouse release on {wx} {wy}.")
+	#	x: int = int(wx / self.square)
+	#	y: int = int(wy / self.square)
+	#	cx, cy = self.getWorldCoordinates(x, y)
+	#	if self.selectedRoom.x != cx or self.selectedRoom.y != cy:
+	#		print(f"moving {self.selectedRoom.vnum} ({self.selectedRoom.x}, {self.selectedRoom.y}, {self.selectedRoom.z}) to ({cx}, {cy}, {self.selectedRoom.z}).")
 
 	def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
 		if buttons != pyglet.window.mouse.RIGHT:
