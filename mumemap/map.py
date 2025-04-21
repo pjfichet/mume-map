@@ -223,7 +223,7 @@ class Map:
 				yield (vnum, obj, differenceX, differenceY, differenceZ)
 				
 	def move(self, direction, serverid, name, desc):
-	"""Synchronize by movement direction."""
+		"""Synchronize by movement direction."""
 		if not direction and not serverid and not name:
 			return
 		logger.debug(f"Movement \"{direction}\" to room \"{name}\", \"{serverid}\".")
@@ -240,7 +240,7 @@ class Map:
 		self.room(serverid, name, desc)
 
 	def room(self, serverid, name, desc):
-	"""Synchronize by room content (serverid, name, description)"""
+		"""Synchronize by room content (serverid, name, description)"""
 		if not name or not desc:
 			return
 		logger.debug(f"Searching for room \"{name}\", \"{serverid}\".")
@@ -272,7 +272,7 @@ class Map:
 		logger.warning(f"Room not found: (\"{serverid}\", \"{name}\", \"\"\"{desc}\"\"\")")
 
 	def match(self, serverid, name, desc):
-		"""Add server_id to room."""
+		"""Add server_id to room if it matches correctly"""
 		logger.debug(f"Test if room {self.currentRoom.vnum} matches \"{name}\", \"{serverid}\".")
 		if (serverid == '0' or serverid == ''
 			or not name or not desc):
@@ -297,9 +297,8 @@ class Map:
 			self.synced = True
 			logger.info(f"Partial match (name: {nameratio}, desc: {descratio}): add serverid {serverid} to room {self.currentRoom.vnum}.")
 			return
-		else:
-			logger.warning(f"Partial match failed (name: {nameratio}, desc: {descratio}).")
 		# nothing matches
+		logger.warning(f"Partial match failed (name: {nameratio}, desc: {descratio}).")
 		logger.warning(f"Current room {self.currentRoom.vnum} does not match \"{serverid}\", \"{name}\", \"{desc}\".")
 		self.synced = False
 		#if self.currentRoom.serverid and self.currentRoom.serverid != '0':
