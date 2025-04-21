@@ -306,20 +306,40 @@ class Map:
 			#logger.warning(f"Deleting wrong serverid {self.currentRoom.serverid} from room {self.currentRoom.vnum}.")
 			#self.currentRoom.serverid = '0'
 
-	def diff(self, name, desc):
+	def diff(self, name, desc, json_exits):
 		"""Calculates the diff between mume room and map room"""
 		logger.debug(f"Calculate diff of {self.currentRoom.vnum} with server info.")
+		exits = json.loads(json_exits[0:-2])
 		name = fmt.stringAscii(name)
 		desc = fmt.stringAscii(desc)
 		if self.currentRoom.name == name:
 			nameratio = 1
 		else:
 			nameratio = SequenceMatcher(None, self.currentRoom.name.lower(), name.lower()).ratio()
+			self.echo(f"map:{self.currentRoom.name}")
+			self.echo(f"mum:{name}")
 		if self.currentRoom.desc == desc:
 			descratio = 1
 		else:
 			descratio = SequenceMatcher(None, self.currentRoom.desc.lower(), desc.lower()).ratio()
-		self.echo(f"Diff name:{nameratio}, desc:{descratio}")
+			self.echo(f"map:{self.currentRoom.desc}")
+			self.echo(f"mum:{desc}")
+		exitmore = []
+		exitless = []
+		for exit in ["north", "east", "south", "west", "up", "down"]:
+			if exit in self.currentRoom.exits and exit[0] not in exits:
+				exitmore.append(exit)
+			if exit not in self.currentRoom.exits and exit[0] in exits:
+				exitless.append(exit)
+		self.echo(f"Diff of {self.currentRoom.vnum}, name:{nameratio:.2f}, desc:{descratio:.2f}, more:{exitmore}, less:{exitless}")
+
+	def copy(self, serverid, name, desc):
+		self.currentRoom.serverid = serverid
+		self.currentRoom.name = fmt.stringAscii(name)
+		self.currentRoom.desc = fmt.stringAscii(desc)
+		self.synced = True
+		self.echo(f"Room {self.currentRoom.vnum} overwritten.")
+		logger.info(f"Overwriting room {self.currentRoom.vnum} with server data.")
 
 	def sync(self, room):
 		self.synced = True
