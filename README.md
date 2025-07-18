@@ -1,3 +1,7 @@
+# Moved to codeberg
+
+This repository has been migrated to codeberg: https://codeberg.org/pjfichet/mume-map
+
 # Mume mini mapper
 
 This is a mini mapper for playing [MUME](https://mume.org "MUME Official Site").
